@@ -1,0 +1,9 @@
+const PREV_CIRCLES = 'PREV_CIRCLES';
+const SEND_CIRCLE = 'SEND_CIRCLE';
+const NEW_CIRCLE = 'NEW_CIRCLE';
+
+module.exports = {
+  PREV_CIRCLES,
+  SEND_CIRCLE,
+  NEW_CIRCLE,
+}
