@@ -1,8 +1,9 @@
 const {nanoid} = require("nanoid");
-const {PREV_CIRCLES, SEND_CIRCLE, NEW_CIRCLE} = require("../constants");
+const {PREV_CIRCLES, SEND_CIRCLE, NEW_CIRCLE, SEND_SQUARE, NEW_SQUARE, PREV_SQUARES} = require("../constants");
 
 const activeConnections = {};
-const savedCoordinates = [];
+const circleSavedCoordinates = [];
+const squareSavedCoordinates = [];
 
 module.exports = (ws, req) => {
   const id = nanoid();
@@ -10,7 +11,11 @@ module.exports = (ws, req) => {
   activeConnections[id] = ws;
 
   ws.send(JSON.stringify({
-    type: PREV_CIRCLES, coordinates: savedCoordinates,
+    type: PREV_CIRCLES, circleSavedCoordinates: circleSavedCoordinates,
+  }));
+
+  ws.send(JSON.stringify({
+    type: PREV_SQUARES, squareSavedCoordinates: squareSavedCoordinates,
   }));
 
   ws.on('message', msg => {
@@ -19,9 +24,18 @@ module.exports = (ws, req) => {
       case SEND_CIRCLE:
         Object.keys(activeConnections).forEach(id => {
           const conn = activeConnections[id];
-          savedCoordinates.push(decodedMessage.coordinates);
+          circleSavedCoordinates.push(decodedMessage.coordinates);
           conn.send(JSON.stringify({
-            type: NEW_CIRCLE, circleCoordinates: decodedMessage.coordinates,
+            type: NEW_CIRCLE, coordinates: decodedMessage.coordinates,
+          }));
+        });
+        break;
+      case SEND_SQUARE:
+        Object.keys(activeConnections).forEach(id => {
+          const conn = activeConnections[id];
+          squareSavedCoordinates.push(decodedMessage.coordinates);
+          conn.send(JSON.stringify({
+            type: NEW_SQUARE, coordinates: decodedMessage.coordinates,
           }));
         });
         break;

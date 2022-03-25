@@ -1,8 +1,20 @@
-<div style="padding: 20px">
+<div class="container">
   <canvas width="400" height="400" style="border: 1px solid black" #canvas (click)="onCanvasClick($event)"></canvas>&nbsp;
 
-  <select id="colors" [(ngModel)]="color" [style]="{'background': color}">
-    <option *ngFor="let c of colors" [value]="c" [style]="{'background': c}">{{ c }}</option>
-  </select>
+  <div class="options">
+    <select id="colors" [(ngModel)]="color" [style]="{'background': color}" class="color">
+      <option *ngFor="let c of colors" [value]="c" [style]="{'background': c}">{{ c }}</option>
+    </select>&nbsp;
+
+    <div>
+      <label for="square">SQUARE</label>
+      <input type="radio" name="shape" value="square" id="square" [(ngModel)]="shape">
+    </div>&nbsp;
+
+    <div>
+      <label for="square">CIRCLE</label>
+      <input type="radio" name="shape" value="circle" id="circle" [(ngModel)]="shape">
+    </div>
+  </div>
 </div>
 

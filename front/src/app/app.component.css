@@ -1,4 +1,14 @@
-div {
+.container {
   display: flex;
   align-items: flex-start;
+  padding: 20px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+}
+
+.color {
+  text-transform: capitalize;
 }
